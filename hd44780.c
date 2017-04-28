@@ -77,6 +77,14 @@ void hd44780_putchar(uint8_t ascii_symb)
     lcd_send(ascii_symb, 1);
 }
 
+void hd44780_puts(const uint8_t *ascii_string)
+{
+    uint8_t i;
+	for (i = 0; ascii_string[i] != '\0'; i++) {
+        hd44780_putchar(ascii_string[i]);
+    }
+}
+
 void hd44780_init(struct hd44780_operations *init_hd44780) 
 {
     lcd_ops = init_hd44780;
@@ -120,9 +128,19 @@ void hd44780_init(struct hd44780_operations *init_hd44780)
 
 	lcd_ops->hd44780_delay_us(200);
 	lcd_send(0x08, 0);
-	lcd_send(0x0c, 0);
+	hd44780_cursor(0);
 	hd44780_clear();
 	lcd_send(0x06, 0);
 
     lcd_ops->hd44780_delay_ms(100);
+}
+
+void hd44780_cursor(uint8_t cur_state)
+{
+    if(cur_state == 0) {
+       lcd_send(0x0C, 0); 
+    }
+    else{
+       lcd_send(0x0E, 0); 
+    }
 }

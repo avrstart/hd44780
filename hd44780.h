@@ -25,6 +25,8 @@ void hd44780_gotoxy(uint8_t pos_x, uint8_t pos_y);
 void hd44780_clear(void);
 void hd44780_init(struct hd44780_operations *init_hd44780);
 void hd44780_putchar(uint8_t ascii_symb);
+void hd44780_puts(const uint8_t *ascii_string);
+void hd44780_cursor(uint8_t cur_state);
     
 #endif 
 
